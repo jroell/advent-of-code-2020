@@ -2,16 +2,14 @@ const input = '1975 1446 1902 1261 1783 1535 1807 1606 1685 1933 1930 1813 1331 
   .split(' ')
   .map(x => Number(x));
 
+let answer = null;
 input.find(x => {
   const curSum = 2020 - x;
   let s = new Set();
   return input.find(y => {
     const last = curSum - y;
     if (s.has(last)) {
-      console.log(last); // 559
-      console.log(x); // 593
-      console.log(y); // 868
-      console.log(last * x * y); // 287730716 (answer)
+      answer = last * x * y;
       return true;
     } else {
       s.add(y);
@@ -19,3 +17,5 @@ input.find(x => {
     }
   });
 });
+
+console.log(answer); // 287730716
