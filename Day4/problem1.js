@@ -46,47 +46,42 @@
 // Count the number of valid passports - those that have all required fields. Treat cid as optional. In your batch file, how many passports are valid?
 
 import fs from 'fs';
-const input = fs.readFileSync(process.cwd() + '/Day4/testInput.txt').toString();
+const input = fs.readFileSync(process.cwd() + '/Day4/input.txt').toString();
 const lines = input.split('\n');
-const bagTypes = lines.map(line => createBag(line));
+const passports = [];
+let startIndex = 0;
 
-const mem = new Map();
-const containsShinyGoldBag = bagName => {
-  if (!bagName) {
-    return false;
+createPassportIndexes();
+
+const answer = passports.reduce((acc, passport) => {
+  const data = lines
+    .slice(passport.startIndex, passport.endIndex + 1)
+    .join(' ')
+    .split(' ');
+  if (isValid(data)) {
+    acc += 1;
   }
-  if (mem.has(bagName)) {
-    return mem.get(bagName).containsShinyGold;
-  }
-  const bag = bagTypes.filter(x => x).find(bt => bt.name == bagName);
-  if (bag.containsShinyGold) {
-    mem.set(bag.name, bag);
+  return acc;
+}, 0);
+
+function isValid(data) {
+  if (data.length == 7) {
+    if (!data.find(x => x.includes('cid'))) {
+      return true;
+    }
+  } else if (data.length == 8) {
     return true;
   }
-  const subBagsContainShinyGold = bag.bags.filter(b => containsShinyGoldBag(b.name)).length > 0;
-  bag.containsShinyGold = subBagsContainShinyGold;
-  mem.set(bag.name, bag);
-  return bag.containsShinyGold;
-};
-
-function createBag(line) {
-  const words = line.split(' ');
-  const numOfSubBagTypes = line.split('').filter(x => x === ',').length + 1;
-  const skip = 4;
-  const bag = { name: words[0] + '_' + words[1], bags: [], containsShinyGold: false };
-
-  for (let i = 1; i <= numOfSubBagTypes; i++) {
-    const subBagNum = words[skip * i] == 'no' ? 0 : Number(words[skip * i]);
-    for (let j = 1; j <= subBagNum; j++) {
-      const subBagName = words[skip * i + 1] + '_' + words[skip * i + 2];
-      bag.bags.push({ name: subBagName });
-      if (subBagName == 'shiny_gold') {
-        bag.containsShinyGold = true;
-      }
-    }
-  }
-  return bag;
+  return false;
 }
 
-const answer = bagTypes.filter(b => containsShinyGoldBag(b.name)).length;
-console.log(answer); // 248
+function createPassportIndexes() {
+  for (let i = 0; i < lines.length; i++) {
+    if (!lines[i].trim()) {
+      passports.push({ startIndex, endIndex: i - 1 });
+      startIndex = i + 1;
+    }
+  }
+}
+
+console.log(answer); // 208
