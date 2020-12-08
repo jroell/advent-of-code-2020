@@ -46,7 +46,7 @@
 // Count the number of valid passports - those that have all required fields. Treat cid as optional. In your batch file, how many passports are valid?
 
 import fs from 'fs';
-const input = fs.readFileSync(process.cwd() + '/Day7/input.txt').toString();
+const input = fs.readFileSync(process.cwd() + '/Day4/testInput.txt').toString();
 const lines = input.split('\n');
 const bagTypes = lines.map(line => createBag(line));
 
