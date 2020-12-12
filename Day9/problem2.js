@@ -33,13 +33,30 @@ To find the encryption weakness, add together the smallest and largest number in
 What is the encryption weakness in your XMAS-encrypted list of numbers?
 */
 import fs from 'fs';
-const input = fs.readFileSync(process.cwd() + '').toString();
+const input = fs.readFileSync(process.cwd() + '/Day9/Input.txt').toString();
 const lines = input.split('\n').map(x => Number(x));
-const preamble = 5;
-const invalidNumber = 127;
-// 105950735
-const prev = null;
-const sum;
-for (let i = 0; i < lines.length; i++) {
-  while (sum < invalidNumber) {}
+const invalidNumber = 105950735;
+let i = 0;
+let j = 1;
+while (j < lines.length) {
+  let sum = lines.slice(i, j + 1).reduce((acc, x) => acc + x, 0);
+  sum;
+  if (sum > invalidNumber) {
+    i++;
+    j = i + 1;
+  }
+  if (sum < invalidNumber) {
+    j++;
+  }
+  if (sum === invalidNumber) {
+    console.log(invalidNumber);
+    console.log(i);
+    console.log(j + 1);
+    break;
+  }
 }
+const sorted = lines.slice(i, j).sort((a, b) => a - b);
+const high = sorted[sorted.length - 1];
+const low = sorted[0];
+const answer = high + low;
+console.log(answer); // 13826915
