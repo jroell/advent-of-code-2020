@@ -1,0 +1,26 @@
+{
+  "name": "advent-of-code-2020",
+  "version": "1.0.0",
+  "description": "code puzzles",
+  "main": "index.js",
+  "type": "module",
+  "dependencies": {
+    "@types/lodash": "^4.14.165",
+    "@types/node": "^14.14.13",
+    "lodash": "^4.17.20"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jroell/advent-of-code-2020.git"
+  },
+  "author": "Jason Roell",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jroell/advent-of-code-2020/issues"
+  },
+  "homepage": "https://github.com/jroell/advent-of-code-2020#readme"
+}
